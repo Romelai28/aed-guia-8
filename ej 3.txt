@@ -1,0 +1,35 @@
+Idea: Aplicar selection sort de manera parcial, hacer k recorridas lineales y luego dar la subsarray [0,k) resultante.
+Tiene complejidad O(n*k).
+Si k >log(n) conviene ordenarlo en O(n*log(n)) y luego dar la subarray [0,k). La complejidad queda O(n*log(n)+k)) pero como k<=n se tiene que es O(n*log(n)).
+
+encontrarKMásPequeños(in A: array<int>; in k: int): array<int>
+// Complejidad O(k*n)
+
+for (i=0; i<k; i++){  // Ejecuta k veces. Complejidad del ciclo k*O(n) = O(k*n)
+    indiceMin = i  // O(1)
+    for (j=i; j<A.length;j++){  // Ejecuta n veces. Complejidad ciclo interno: O(n)
+        if (A[i] > A[j]) then  // O(1)
+            indiceMin = j  // O(1)
+    }
+    swap(A, i, indiceMin)  // O(1)
+}
+
+res = new array<int>(k)  // O(k)
+
+for (i=0; i< res.length; i++){  // Ejecuta k veces. Complejidad del ciclo: // O(k)
+    res[i] = A[i]  // O(1)
+}
+
+return res  // O(1)
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+swap(inout A: array<T>; in i: int; in j: int)
+// Complejidad: O(1)
+// Requiere: 0 <= i,j < A.length
+
+temp = A[i]  // O(1)
+A[i] = A[j]  // O(1)
+A[j] = temp  // O(1)
+
+---------------------------------------------------------------------------------------------------------------------------------------

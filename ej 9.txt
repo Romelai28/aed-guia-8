@@ -1,0 +1,38 @@
+OBS: #Gen acotado. Lo considero cte.
+Mido la complejidad en termino de n = p.length.
+
+ordenarPlanilla(inout p: planilla)
+// Complejidad: O(n)
+
+// Crear bucket nota.
+bucket_nota = new array <listaEnlazada<Alumno>>(11)  // O(1)
+// Asumo que todas las distasEnlazadas se inicializan vacias.
+for (i=0; i < p.length; i++){  // Ejecuta n veces O(1): Es O(n)
+    bucket_nota[p[i].nota].agregarAlFinal(p[i])  // O(1) -cuerpo-
+}
+
+// A partir del bucket nota, creo el bucket género.
+bucket_género = new array <listaEnlazada<Alumno>>(#gen - 1)  // O(1)
+for (i=0; i < bucket_nota.length; i++{  // Todo el for es O(n)  (*)
+    it = bucket_nota[i].iterador()  // O(1)
+    while (it.haySiguiente()){
+        bucket_genero[p[i].genero].agregarAlFinal(p[i])  // O(1)   // Estoy asumiendo que genero es un número.
+        it.siguiente()  // O(1)
+    }
+}
+
+// A partir del bucket género, le doy orden a p.
+k = 0  // O(1)
+for(i=0; i < bucket_género.length; i++){  // Mismo razonamiento que antes, todo el for tiene complejidad O(n)
+    it = bucket_género[i].iterador()  // O(1)
+    while (it.haysiguiente()){
+        p[k] = it.siguiente()  // O(1)
+        k++  // O(1)
+    }
+}
+
+(*) El for se ejecuta bucket_nota.length veces. El while de dentro se ejecuta bucket_nota[i].length veces. Como la sumatoria de #elementos que tiene bucket_nota[i] para cada i en rango es igual a n.
+Va a haber n ejecuciones de operaciones O(1). Por lo tanto, todo el for tiene complejidad O(n)
+
+Item c) No contradice el teorema de "lower bound" ya que este algoritmo O(n) no es un algoritmo general de ordenamiento sino que se basa en datos que sabemos del input. Estos son, una cantidad acotada de notas [desde 0 hasta 10]
+y un número acotado de generos [desde 0 hasta #gen sin incluir)

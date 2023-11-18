@@ -1,0 +1,34 @@
+Sea A[1...n] un arreglo de números naturales en rango (cada elemento está en el rango de 1 a k, siendo
+k alguna constante). Diseñe un algoritmo que ordene esta clase de arreglos en tiempo O(n). Demuestre que la
+cota temporal es correcta.
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+La mágia esta en que k es una cte.
+
+rango [inicio, fin), es decir inicio incluido hasta fin sin incluir.
+
+El algoritmo fue escritos en terminos de rango, inicio-fin para ser más generico. En el ejercicio que nos piden, tomemos:
+inicio = 1
+fin = k+1  (El +1 es para que k este incluido)
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+ordenarEnRango(inout A: array)
+// Complejidad: O(n + (fin-inicio)), como tomamos fin-inicio como cte, la complejidad final es O(n).
+
+arr_repeticiones = new array<int>(fin-inicio)  // O(fin-inicio)
+// Asumo que los valores de la array se inicializan en 0.
+
+for (i=0; i<A.length; i++){  // Ejecuta n veces. Complejidad del ciclo: O(n)
+    arr_repeticiones[A[i]-inicio] += 1  // O(1)
+}
+
+indice = 0  // O(1)
+for (i=0; i<arr_repeticiones.length; i++){  // El for exterior ejecuta fin-inicio veces. La complejidad del ciclo termina siendo O(n + (fin-inicio))
+    for (j=0; j < arr_repeticiones[i]; j++){  // El for interno ejecuta arr_repeticiones[i] veces. La sumatoria de los elementos de arr_repeticiones es n.
+        A[indice] = i + inicio  // O(1)
+        indice++  // O(1)
+    }
+}
+

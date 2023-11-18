@@ -1,0 +1,46 @@
+tablaKPosiciones(in A: array<tupla<nombre:string, puntos:nat, intentos:nat>>, in k:nat): array<string>
+// Complejidad final: O(n+k+k*log(n)) = O(n + k*log(n)) como se quería :)
+
+// Nueva arr igual a la original pero con la información de su indiceOriginal para hacer un algoritmo estable.
+
+arr = new array<tupla<nombre:string, puntos:nat, intentos:nat, indiceOriginal:nat>>(A.length)  // O(n)
+
+for (i=0; i< A.length; i++){  // Se ejecuta n veces. Complejidad del ciclo O(n)
+    arr[i].nombre = A[i].nombre  // O(1)
+    arr[i].puntos = A[i].puntos  // O(1)
+    arr[i].intentos = A[i].intentos  // O(1)
+    arr[i].indiceOriginal = i  // O(1)
+}
+
+minHeap = arr2Heap*(arr)  // O(n)  // Utiliza algoritmo de Floyd para crear un min_heap.
+
+res = new array<tupla<nombre:string, puntos:nat, intentos:nat>>(k)  // O(k)
+
+for (i=0; i<k; i++){  // Se ejecuta k veces. complejidad del ciclo O(k*log(n))
+    escalador_info = minHeap.desencolar*()  // O(log(n))
+    res[i].nombre = escalador_info.nombre  // O(1)
+    res[i].puntos = escalador_info.puntos  // O(1)
+    res[i].intentos = escalador_info.intentos  // O(1)
+
+return res  // O(1)
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+el minHeap, sus operaciones, incluidas particularmente arr2Heap* y desencolar* utilizan la siguiente interfaz de comparación:
+
+Criterio 1: puntos
+Criterio 2: intentos
+Criterio 3: indiceOriginal
+
+// En código se vería así:
+
+comparteTo(in escalador_1: tupla<nombre:string, puntos:nat, intentos:nat, indiceOriginal:nat>, in escalador_2: tupla<nombre:string, puntos:nat, intentos:nat, indiceOriginal:nat>): int
+// Complejidad final: O(1)
+
+if (escalador_1.puntos - escalador_2.puntos == 0) then  // O(1)
+    if (escalador_1.intentos - escalador_2.intentos == 0) then  // O(1)
+        return escalador_1.indiceOriginal - escalador_2.indiceOriginal  // O(1)
+    else
+        return escalador_1.intentos - escalador_2.intentos  // O(1)
+else
+    return escalador_1.puntos - escalador_2.puntos  // O(1)
