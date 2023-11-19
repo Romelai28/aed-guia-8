@@ -1,0 +1,41 @@
+La complejidad la vamos a medir en terminos de:
+n, longitud de A.
+h, cantidad de escaleras.
+
+
+escaleraSort(inout A: array<int>)
+# La complejidad final es O(n+ h*log(h))
+
+
+miHeap = new ColaDePrioridad<tuple<int,int>> (*)  // O(1)
+
+
+while(i<A.length){  // Evaluar la guarda O(1) // La complejidad del ciclo total es de O(n + h*log(h))
+    info = new tuple<int, int>  // O(1)
+    info[0] = i  // O(1)
+
+    while(j<A.length-1 && A[j+1] = A[j]+1){  // Evaluar la guarda O(1) // Se ejecuta largo de la escalera actual veces.
+        j++  // O(1)
+    }
+
+    j++  // O(1)
+    info[1] = j  // O(1)
+    i = j  // O(1)
+
+    miHeap.encolar(info)  // O(log(h))
+}
+
+k = 0
+
+while(!miHeap.estaVacio?()){  // Evaluar la guarda O(1) // Se ejecuta h veces. Como la sumatoria de los largo ded las escaleras es n. El for interno tiene complejidad O(n). Luego la complejidad del while es O(h*loh(h) + n)
+    info = miHeap.desencolar()  // O(log(h))
+    for(i=0; i <(info[1]-info[0]); i++)  // Se ejecuta largo de la escalera actual veces. // info[1] - info[0] = fin - inicio = longitud del intervalo
+        A[k] = info[0] + i  // O(1)
+        k++  // O(1)
+    }
+}
+
+
+** miHeap es una cola de prioridad que mantiene un orden interno de la siguiente manera:
+Criterio princial, longitud: info[1] - info[0]
+Criterio secundario, es decir, de desempate: valor inicial de la escalera, es decir, info[0]

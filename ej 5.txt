@@ -1,0 +1,37 @@
+Sea n la longitud de la array A.
+Sea h la cantidad de elementos distintos que tiene la array A.
+OBS: h <= n
+
+repeSort(inout A: array<int>)
+
+// Complejidad final: O(n*log(n)) + O(h) + O(h*log(h)) + O(n) = O(n*log(n) + h*log(h)), como h<=n, tenemos que es igual a O(n*log(n)).
+
+d: DiccionarioLog<int, int>  // O(1)  // Donde las claves son un elemento de A y su valor la cantidad de apariciones que tiene.
+
+for (i=0; i<A.length; i++){  // El ciclo se ejecuta n veces y su cuerpo es O(log(n)). Por lo tanto la complejidad del ciclo es // O(n*log(n))
+    if (d.está?(A[i]) then  // Evaluar la guarda: O(log(n)), luego ambas ramas cuestan lo mismo, O(log(n))
+        d.definir(A[i], A[i]+1)  // O(log(n))
+    else
+        d.definirRápido(A[i], 1)  // O(log(n))
+}
+
+arr_auxiliar = new array<tuple<int, int>>(d.length)  // O(h)  // Array de tuplas <elemento, repeticiones>
+
+i = 0  // O(1)
+for (key in d){  // Se ejecuta h veces. La complejidad del cilo es O(h*log(h))
+    arr_auxiliar[i] = tuple<k, d.obtener(k)>  // O(log(h))
+    i++  // O(1)
+}
+
+// Ordeno de menos prioritario a más prioritario.
+arr_auxiliar.mergeSort() <- Por primer valor de la tupla (elemento) de forma creciente  // O(h*log(h))
+arr_auxiliar.mergeSort() <- Por segundo valor de la tupla (repeticiones) de forma creciente.  // O(h*log(h))
+
+k=0  // O(1)
+
+for(i=0; i<arr_auxiliar.length; i++){  // Se ejecuta h veces. La sumatoria de los elementos de arr_auxiliar[i][1] con i en rango es igual a n. Por lo tanto la complejidad del ciclo es O(n)
+    for(j=0; j<arr_auxiliar[i][1]; j++)  // Se ejecuta arr_auxiliar[i][1]
+        A[k] = arr_auxiliar[i][0]  //O(1)
+        k++  //O(1)
+    }
+}
