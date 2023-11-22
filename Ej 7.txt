@@ -1,0 +1,34 @@
+Sea n la cantidad de elems a ordenar. Sea d la cantidad de elementos distintos a ordenar. Quiero ordenar en O(n*log(d))
+
+Idea: Creo un diccionario logaritmico (que es un AVL y ordena por criterio de clave) dr<clave: elem, valor: #repeticiones>
+Recorro linealmente A y voy contando en dr el número de repeticiones de cada elemento de A.
+Itero por el dr (por el AVL) usando un iterador inorder, me da las claves ordenadas de menor a mayor. La recorrida porque la estoy haciendo completa es O(d).
+Durante la itertación voy modificando la array original A metiendo los valores la cantidad adecuada de veces.
+
+AVLSort(inout A: array<int>)
+dr: diccionarioLog<int,int> // O(1) // Asumo que se crea vacío.
+
+for(i=0; i<A.length; i++){  // Se ejecuta n veces, complejidad del ciclo: O(n*log(d))
+    if (dr.está?(A[i]) then  // Evaluar la guarda O(log(d))
+        dr.definir(A[i], dr.obtener(A[i]) + 1)  // O(log(d))
+    else
+        dr.definirRápido(A[i], 1)  // O(log(d))
+}
+
+k=0  // O(1)
+it = dr.iterador()  // O(1)  // Recorre el AVL ordenadamente con inorder.
+
+while(it.haySiguiente?()){  // Complejidad del ciclo: O(n*log(d)) **NOTA
+    clave = it.siguiente()
+    repes = dr.obtener(clave)  // O(log(d))
+    for(i=0; i<repes; i++){  // O(repes) La sumatoria de repes de los elems es n.
+        A[k] = clave  // O(1)
+    }
+}
+
+
+**NOTA:
+JUSTIFICACIÓN 1: Recorrer todo el AVL inorder es O(d), por cada elem, su repes >= 1. Si sumamos las iteraciones del while y las del for interno, tenemos en total n iteraciones, la cantidad original de elementos. El mayor costo de una iteración es O(log(d)).
+
+JUSTIFICACIÓN 2: La complejidad es O(d*log(d)) + O(n). Porque el while se ejecuta d veces. d*O(log(d)) = O(d*log(d)). Como la sumatoria de repes de todos los elems es n, el for tiene complejidad O(n).
+Luego cómo d<=n, se tiene que O(d*log(d)) + O(n) implica O(n*log(d)) + O(n) = O(n*log(d))
